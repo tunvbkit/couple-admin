@@ -1,0 +1,117 @@
+/* Login- Cuong */
+.view-login{
+	background: #FBFBFB;
+	box-shadow: 2px 2px 2px 2px #888888;
+	margin-top: 100px;
+	margin-bottom: 70px;
+}
+.form-login{
+	margin-top: 50px;
+}
+.form-login input{
+	margin-left: 20px;
+	width: 260px;
+
+}
+.form-login button{
+	margin-left: 20px;
+}
+.title{
+	height: 128px;
+	display: block;
+	background: url(http://www.admin-magazine.com/extension/adminmag/design/admin_fe/images/admin-magazine-og.png) no-repeat;
+	background-size: 360px 128px;
+}
+/*Vendors- Cuong*/
+.vendor .search{
+	margin-top: 20px;
+}
+.vendor h1 a.add-vendor{
+	font-size: 20px;
+	background: #DDDDDD;
+	padding: 5px 10px 0px 10px;
+}
+.vendor h1 a.add-vendor:hover{
+	text-decoration: none;
+	color: #D54E21;
+}
+.breadcrumb{
+	clear: both;
+}
+.table-responsive tbody tr ul{
+	display: none;
+}
+.table-responsive tbody tr ul.menu li{
+	float: left;
+}
+.table-responsive tbody tr ul.menu li a{
+	border-right: 1px solid #767676;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.table-responsive tbody tr ul.menu li:last-child a{
+	border:none;
+}
+.table-responsive tbody tr ul.menu li a:hover{
+	text-decoration: none;
+	color: #D54E21;
+}
+.table-responsive tbody tr:hover ul.menu{
+	display: block;
+}
+.register-vendor p.alert-danger{
+	margin-top: 10px;
+	padding:5px;
+}
+label.error{
+	margin-top: 10px;
+	color: #e95b4c;
+}
+.menu-vendor{
+	margin-bottom: 20px;
+}
+/*hover- Cuong*/
+div#menu ul.list-unstyled span{
+	display: block;
+	padding: 5px;
+	cursor: pointer;
+}
+div#menu ul.list-unstyled span:hover{
+	color: #3399FF;
+}
+/*Range CUong*/
+.form-range{
+	width: 300px;
+}
+
+
+/* Giang -> User */
+#email-user p{
+	display: none;
+}
+#email-user:hover p{
+	display: block;
+}
+label.error{
+	color: #d8142b;
+}
+input[type="date"]::-webkit-calendar-picker-indicator{
+    display:inline-block;
+}
+
+.per_page{
+	width: 100%;
+	height: 50px;
+	text-align: center;
+}
+/****Upload Image Slide*****/
+
+td div.menu-hidden a 
+{
+	display: none;
+}
+.table-image-slide tbody tr:hover > td div.menu-hidden a 
+{
+	display: inline-block;
+	
+}
