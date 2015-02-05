@@ -96,7 +96,11 @@ Users
 				@if ( $user['role_id']==1 )
 					Admin
 				@else
+					@if($user['role_id']==2)
 					User
+					@else
+					Vendor
+					@endif
 				@endif
 			</td>
 
