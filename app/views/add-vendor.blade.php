@@ -14,7 +14,7 @@
 
 	<div class="row">
 		<div class="col-xs-8">
-			<form id="register-vendor" method="post" action="{{URL::route('add-vendor')}}" accept-charset="UTF-8" enctype="multipart/form-data" role="form">
+			<form id="register-vendor" method="post" action="{{URL::route('store-vendor')}}" accept-charset="UTF-8" enctype="multipart/form-data" role="form">
 
                 <div class="form-group">
                     <label>Name</label>
@@ -143,8 +143,6 @@
                         minlength:5
                     },
                     email:{
-                      
-                        email:true,
                         remote:{
                                 url:'{{URL::route('check-vendor-email')}}',
                                 type:"POST"
@@ -170,8 +168,6 @@
                         minlength:"Yêu cầu nhập trên 5 kí tự"
                     },
                     email:{
-                       
-                        email:"Không đúng định dạng email",
                         remote:"Email đã tồn tại"
                     },
                     phone:{

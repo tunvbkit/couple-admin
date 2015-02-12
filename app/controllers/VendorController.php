@@ -31,30 +31,34 @@ class VendorController extends \BaseController {
 	 */
 	public function store()
 	{
-
 			$year=date("Y");
 			$month=date('m');
-
-			
-
-			File::makeDirectory(storage_path('images/'.$year.'/'.$month),$mode = 0775,true,true);
+			File::makeDirectory(base_path('../images/avatar/'.$year.'/'.$month),$mode = 0775,true,true);
 			$image = Input::file('avatar');
 			$filename =str_random(10) . '.' .$image->getClientOriginalExtension();
-			$path = storage_path('images/'.$year.'/'.$month.'/'.$filename);
-			$pathsave='images/'.$year.'/'.$month.'/'.$filename;
+			$path = base_path('../images/avatar/'.$year.'/'.$month.'/'.$filename);
+			$pathsave='images/avatar/'.$year.'/'.$month.'/'.$filename;
 			Image::make($image->getRealPath())->resize(300, 300)->save($path);
-
+			if (!empty(Input::get('email'))) {
+				$user = new User();
+				$user->email = Input::get('email');
+				$user->role_id = 3;
+				$user->password = Hash::make('123456');
+				$user->save();
+			}			
 			$vendor=new Vendor();
 			$vendor->name=Input::get('name');
+			if (!empty(Input::get('email'))) {
+				$vendor->user = User::where('email',Input::get('email'))->get()->first()->id;
+			}			
 			$vendor->address=Input::get('address');
-			$vendor->email=Input::get('email');
 			$vendor->phone=Input::get('phone');
 			$vendor->website=Input::get('website');
 			$vendor->map=Input::get('map');
 			$vendor->video=Input::get('video');
 			$vendor->category=Input::get('category');
 			$vendor->location=Input::get('location');
-			$vendor->photo=$pathsave;
+			$vendor->avatar=$pathsave;
         	$vendor->about=strip_tags(Input::get('editor4'));
         	$vendor->slug=Str::slug(Input::get('name'));
         	$vendor->save();
@@ -106,26 +110,26 @@ class VendorController extends \BaseController {
 			$year=date("Y");
 			$month=date('m');
 
-			$photo_vendor = Vendor::where('id', $id)->get()->first()->photo;
+			$photo_vendor = Vendor::where('id', $id)->get()->first()->avatar;
 
 			if(Input::hasFile('avatar')) 
 			{
 
-				$path_delete=storage_path($photo_vendor);
+				$path_delete = base_path($photo_vendor);
 				File::delete($path_delete);
 
-				File::makeDirectory(storage_path('images/'.$year.'/'.$month),$mode = 0775,true,true);
+				File::makeDirectory(base_path('images/avatar/'.$year.'/'.$month),$mode = 0775,true,true);
 				$image = Input::file('avatar');
 				$filename =str_random(10) . '.' .$image->getClientOriginalExtension();
-				$path = storage_path('images/'.$year.'/'.$month.'/'.$filename);
-				$pathsave='images/'.$year.'/'.$month.'/'.$filename;
+				$path = base_path('images/avatar/'.$year.'/'.$month.'/'.$filename);
+				$pathsave='images/avatar/'.$year.'/'.$month.'/'.$filename;
 				Image::make($image->getRealPath())->resize(300, 300)->save($path);
 			}
 
 			$vendor=Vendor::find($id);
 			$vendor->name=Input::get('name');
 			$vendor->address=Input::get('address');
-			$vendor->email=Input::get('email');
+			$vendor->user=Input::get('user');
 			$vendor->phone=Input::get('phone');
 			$vendor->website=Input::get('website');
 			$vendor->map=Input::get('map');
@@ -135,10 +139,10 @@ class VendorController extends \BaseController {
 			
 			if(Input::hasFile('avatar')) 
 			{
-				$vendor->photo=$pathsave;
+				$vendor->avatar=$pathsave;
 			} else {
-				$photo_vendor = Vendor::where('id', $id)->get()->first()->photo;
-				$vendor->photo=$photo_vendor;
+				$photo_vendor = Vendor::where('id', $id)->get()->first()->avatar;
+				$vendor->avatar=$photo_vendor;
 			}
 
 			
@@ -156,33 +160,48 @@ class VendorController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
+	public static function deleteOneVendor($id){
+		$name = Vendor::where('id',$id)->get()->first()->avatar;
+		$path_delete = base_path('../'.$name);
+		File::delete($path_delete);
+		Vendor::find($id)->delete();
+	}
+	public static function deleteManyImage($id){
 		$counts=PhotoSlide::where('vendor',$id)->get()->count();		
 		if($counts>0)
-		{
-			ImageSlideController::deleteImageVendor($id);
-			Vendor::find($id)->delete();
-			return Redirect::to('admin/vendors')->with('messages',"Xoa vendor thanh cong");
+		{	
+			foreach (PhotoSlide::where('vendor',$id)->get() as $photo)
+			 {
+				ImageSlideController::deleteImageVendor($photo->id);
+			}
+			
+			VendorController::deleteOneVendor($id);
 		}
 		else
-		{
-			Vendor::find($id)->delete();
-			return Redirect::to('admin/vendors')->with('messages',"Xoa vendor thanh cong");
-
+		{	
+			VendorController::deleteOneVendor($id);
 		}
-		
-
-		
+	}
+	public function destroy($id)
+	{
+		VendorController::deleteManyImage($id);
+		return Redirect::to('admin/vendors')->with('messages',"Xoa vendor thanh cong");
 	}
 	public function delete_vendors(){
+		$ids=array();
 		foreach(Vendor::get() as $vendor){
-			if(Input::get('checkbox-'.$vendor->id)==$vendor->id){				
-				ImageSlideController::deleteImageVendor($vendor->id);					
-				Vendor::find($vendor->id)->delete();					
-				
+			if(Input::get('checkbox-'.$vendor->id)==$vendor->id){
+				$ids[]=Input::get('checkbox-'.$vendor->id);
+						
 			}
 		}
+		foreach ($ids as $id=>$key){
+			foreach (Vendor::get() as $vendor){
+				if($vendor->id==$key){
+				VendorController::deleteManyImage($vendor->id);
+				}
+			} // end foreach
+		} //end foreach
 		return Redirect::to('admin/vendors')->with('messages',"Xoa vendor thanh cong");
 		
 	}
@@ -202,7 +221,8 @@ class VendorController extends \BaseController {
 		} 
 	}
 	public function check_vendor_email(){
-		return (Vendor::where("email",Input::get('email'))->count()==0? "true": "false");
+		return (User::where("email",Input::get('email'))->count()==0? "true": "false");
+
 	}
 
 	public function edit_check_vendor_email($id){
@@ -226,7 +246,8 @@ class VendorController extends \BaseController {
 	// get images
 	public static function getImagesVendor($image)
 	{
-		$path = storage_path().'/'.$image;
+		$path = base_path().'/'.$image;
+		return $path;
 		
 		// Read image path, convert to base64 encoding
 		$imageData = base64_encode(file_get_contents($path));

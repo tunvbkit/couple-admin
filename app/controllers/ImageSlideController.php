@@ -24,8 +24,14 @@ class ImageSlideController extends \BaseController {
 	}
 
 	public static function deleteImageVendor($id)
-	{
-		PhotoSlide::where('vendor',$id)->delete();
+	{	
+		$name1 =	PhotoSlide::where('id',$id)->get()->first()->bigpic;
+		$name1 =	PhotoSlide::where('id',$id)->get()->first()->smallpic;
+		$path_delete1 = base_path('../'.$name1);
+		$path_delete2 = base_path('../'.$name2);
+		File::delete($path_delete1);
+		File::delete($path_delete2);		
+		PhotoSlide::where('id',$id)->delete();
 	}
 	public static function deleteImageVendorLocation($id_vendor)
 	{
@@ -38,13 +44,23 @@ class ImageSlideController extends \BaseController {
 	 */
 	public function post_addImage()
 	{
-		
+		$year=date("Y");
+		$month=date('m');
+		File::makeDirectory(base_path('../images/slide/'.$year.'/'.$month),$mode = 0775,true,true);
 		$files=Input::file('bigpic_upload');	
 		foreach ($files as $file) {
+			$filename1 =str_random(10) . '.' .$file->getClientOriginalExtension();
+			$filename2 =str_random(10) . '.' .$file->getClientOriginalExtension();
+			$path1 = base_path('../images/slide/'.$year.'/'.$month.'/'.$filename1);
+			$path2 = base_path('../images/slide/'.$year.'/'.$month.'/'.$filename2);
+			$pathsave1='images/slide/'.$year.'/'.$month.'/'.$filename1;
+			$pathsave2='images/slide/'.$year.'/'.$month.'/'.$filename2;
+			Image::make($file->getRealPath())->resize(700, 450)->save($path1);
+			Image::make($file->getRealPath())->resize(80, 80)->save($path2);
 			$photoslide=new PhotoSlide();
 			$photoslide->vendor=Input::get('vendor');
-			$photoslide->bigpic=Image::make($file->getRealPath())->resize(700, 450)->encode('jpg',80);
-			$photoslide->smallpic=Image::make($file->getRealPath())->resize(80,80)->encode('jpg',80);
+			$photoslide->bigpic=$pathsave1;
+			$photoslide->smallpic=$pathsave2;
 			$photoslide->save();
 		}
 			
@@ -90,6 +106,7 @@ class ImageSlideController extends \BaseController {
 	{
 		$id_vendor=Input::get('id_vendor');
 		$name_vendor=Vendor::where('id',$id_vendor)->get()->first()->name;
+
 		$check=PhotoSlide::where("vendor",$id_vendor)->get()->count();
 		echo json_encode(array('check'=>$check,'name_vendor'=>$name_vendor));
 		exit;
@@ -129,7 +146,13 @@ class ImageSlideController extends \BaseController {
 	}
 	public function delete()
 	{	
-		$id=Input::get('id_image');
+		$id = Input::get('id_image');
+		$name1 =	PhotoSlide::where('id',$id)->get()->first()->bigpic;
+		$name2 =	PhotoSlide::where('id',$id)->get()->first()->smallpic;
+		$path_delete1 = base_path('../'.$name1);
+		$path_delete2 = base_path('../'.$name2);
+		File::delete($path_delete1);
+		File::delete($path_delete2);
 		PhotoSlide::find($id)->delete();
 		echo json_encode(array('id'=>$id));
 		exit;
@@ -147,6 +170,12 @@ class ImageSlideController extends \BaseController {
 		foreach ($ids as $id=>$key){
 			foreach (PhotoSlide::get() as $imageslide){
 				if($imageslide->id==$key){
+					$name1 = PhotoSlide::where('id',$imageslide->id)->get()->first()->bigpic;
+					$name2 = PhotoSlide::where('id',$imageslide->id)->get()->first()->smallpic;
+					$path_delete1 = base_path('../'.$name1);
+					$path_delete2 = base_path('../'.$name2);
+					File::delete($path_delete1);
+					File::delete($path_delete2);
 					PhotoSlide::where("id", "=", $imageslide->id)->delete();
 				}
 			} // end foreach

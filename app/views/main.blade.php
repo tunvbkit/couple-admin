@@ -48,7 +48,7 @@
     <script src="{{Asset('assets/ckeditor/ckeditor.js')}}"></script>
 </head>
 
-<body>
+<body style="overflow-x:hidden">
     <div id="wrapper">
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

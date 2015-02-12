@@ -33,10 +33,19 @@
 
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" name='email' id='email' value="{{$vendor->email}}" placeholder="Enter text" class="form-control">
-                    @foreach ($errors->get('email') as $message)
-                    <p class="text-left alert alert-danger">{{$message}}</p>
-                    @endforeach
+                    <!-- <input type="email" name='email' id='email' value="{{$vendor->email}}" placeholder="Enter text" class="form-control"> -->
+                    <select name="user" class="form-control">
+                        <option value="">Khác</option>
+                        @foreach(User::get() as $user)
+                        <option value="{{$user->id}}" 
+                            @if($user->id==$vendor->user) {{"selected"}}
+                            @endif
+                        >{{$user->email}}</option>
+                        @endforeach
+                        @foreach ($errors->get('email') as $message)
+                        <p class="text-left alert alert-danger">{{$message}}</p>
+                        @endforeach
+                     </select>
                 </div>
 
                 <div class="form-group">
@@ -53,11 +62,11 @@
                 </div>
                  <div class="form-group">
                     <label>Map</label>                   
-                    <input name='map' value="{{$vendor->map}}" placeholder='Copy phần src=" " (<iframe src="Nội dung copy"></iframe>) của Google Map' class="form-control">
+                    <input name='map' placeholder='Copy phần src=" " (<iframe src="Nội dung copy"></iframe>) của Google Map' class="form-control" value="{{$vendor->map}}">
                 </div>
                  <div class="form-group">
                     <label>Video</label>
-                    <input name='video' value="{{$vendor->video}}" placeholder='Copy phần src=" " (<iframe src="Nội dung copy"></iframe>) của Youtube' class="form-control">
+                    <input name='video' placeholder='Sao chép mã nhúng (copy emded code) của Youtube' class="form-control" value='{{$vendor->video}}'>
                 </div>
                 <div class="form-group">
                     <label>Category</label>
@@ -88,7 +97,8 @@
                     <input name="avatar" id='avatar' type="file" accept="image/*" data-max-size="1048576" >
 
                     <!-- display images vendor -->
-                    {{VendorController::getImagesVendor($vendor->photo)}}
+                   <!--  {{VendorController::getImagesVendor($vendor->photo)}} -->
+                   <img class="img-responsive" src="{{Asset("../../{$vendor->avatar}")}}">
                     
                     @foreach ($errors->get('avatar') as $message)
                     <p class="text-left alert alert-danger">{{$message}}</p>
@@ -150,7 +160,6 @@
                     },
                     email:{
                         
-                        email:true,
                         remote:{
                                 url:'{{URL::route('edit-check-vendor-email',array($vendor->id))}}',
                                 type:"POST"
@@ -177,7 +186,6 @@
                     },
                     email:{
                        
-                        email:"Không đúng định dạng email",
                         remote:"Email đã tồn tại"
                     },
                     phone:{

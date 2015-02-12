@@ -34,7 +34,7 @@
 <form id="form-submit" method="post" action="{{URL::route('delete-vendors')}}">
 <div class="row">
     <div class="col-xs-4 menu-vendor">
-        <a href="{{URL::route('add-vendor')}}" class="btn btn-primary">Add Vendor</a>
+        <a href="{{URL::route('create-vendor')}}" class="btn btn-primary">Add Vendor</a>
         <button id="button-submit" type"submit" class="btn btn-danger" data-toggle="modal" >Delete Vendors</button>
         <div class="modal fade" id="no-selected" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
           <div class="modal-dialog">
@@ -95,7 +95,11 @@
                             </td>
                             <td>{{$vendor->address}}</td>
                             <td>{{$vendor->phone}}</td>
-                            <td>{{$vendor->email}}</td>
+                            <td>
+                             @if(!empty(User::where('id',$vendor->user)->get()->first()->email))
+                                {{User::where('id',$vendor->user)->get()->first()->email}}
+                             @endif
+                            </td>
                             <td>{{Vendor::find($vendor->id)->category()->get()->first()->name}}</td>
                             <td>{{Vendor::find($vendor->id)->location()->get()->first()->name}}</td>
                             

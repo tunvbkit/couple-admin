@@ -29,11 +29,11 @@ Route::group(array("prefix" => "admin"),function()
 	Route::post("login",array("as"=>"login","uses"=>"AdminController@post_login"));
 
 	Route::get("vendors",array("as"=>"vendors","before"=>"check_login","uses"=>"VendorController@index"));
-	Route::get("vendors/create",array("as"=>"add-vendor","before"=>"check_login",function(){
+	Route::get("vendors/create",array("as"=>"create-vendor","before"=>"check_login",function(){
 		return View::make('add-vendor');
 	}));
 
-	Route::post("vendors/create",array("as"=>"add-vendor","uses"=>"VendorController@store"));
+	Route::post("vendors/create",array("as"=>"store-vendor","uses"=>"VendorController@store"));
 
 	Route::get("vendors/{id}",array("as"=>"delete-vendor","before"=>"check_login","uses"=>"VendorController@destroy"));
 	

@@ -57,6 +57,7 @@ Users
 		<th></th>
 		<th>#</th>
 		<th>Email</th>
+		<th>Vendor</th>
 		<th>Firstname</th>
 		<th>Lastname</th>
 		<th>Weddingdate</th>
@@ -89,6 +90,11 @@ Users
 					</p>
 				@endif
 			</td>
+			<th>
+				@if(!empty(Vendor::where('user',$user->id)->get()->first()->name))
+				{{Vendor::where('user',$user->id)->get()->first()->name}}
+				@endif
+			</th>
 			<td>{{$user->firstname}}</td>
 			<td>{{$user->lastname}}</td>
 			<td>{{$user['weddingdate']}}</td>
