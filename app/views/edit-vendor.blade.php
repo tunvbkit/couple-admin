@@ -97,8 +97,8 @@
                     <input name="avatar" id='avatar' type="file" accept="image/*" data-max-size="1048576" >
 
                     <!-- display images vendor -->
-                   <!--  {{VendorController::getImagesVendor($vendor->photo)}} -->
-                   <img class="img-responsive" src="{{Asset("../../{$vendor->avatar}")}}">
+                    {{VendorController::getImagesVendor($vendor->avatar)}}
+                   {{-- <img class="img-responsive" src="{{$avatar}}"> --}}
                     
                     @foreach ($errors->get('avatar') as $message)
                     <p class="text-left alert alert-danger">{{$message}}</p>

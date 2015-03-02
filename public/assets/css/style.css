@@ -115,3 +115,17 @@ td div.menu-hidden a
 	display: inline-block;
 	
 }
+/*comment*/
+.detail-from{
+	border-bottom: solid #e7e7e7 1px;
+	text-align: left;
+}
+.time-inbox{
+	text-align: right;
+}
+.content-inbox{
+	text-align: justify;
+}
+.model-delete{
+	margin-top: 10%;
+}

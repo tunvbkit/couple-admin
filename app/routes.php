@@ -208,5 +208,13 @@ Route::group(array("prefix" => "admin"),function()
 	Route::post('check_imageslide',array('as'=>'check_imageslide','uses'=>'ImageSlideController@checkImageSlide'));
 	Route::post('sent_id_image',array('as'=>'sent_id_image','uses'=>'ImageSlideController@sentIdImage'));
 	Route::post('search_image',array('as'=>'search_image','uses'=>'ImageSlideController@search'));
+
+	//comment
+	Route::get('comment',array('as'=>'comment','uses'=>'VendorController@comment'));
+	Route::get('dettail-comment/{id_comment}',array('as'=>'detail_comment','uses'=>'VendorController@detailComment'));
+	Route::post('active-comment',array('as'=>'active_comment','uses'=>'VendorController@activeComment'));
+	Route::post('get-comment',array('as'=>'get_comment','uses'=>'VendorController@getComment'));
+	Route::post('delete-comment',array('as'=>'delete_comment','uses'=>'VendorController@deleteComment'));
+	Route::post('search-comment',array('as'=>'search_comment','uses'=>'VendorController@searchComment'));
 });
 

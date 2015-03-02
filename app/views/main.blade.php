@@ -25,7 +25,7 @@
 
     <script src="{{Asset('assets/js/jquery-1.11.0.js')}}"></script>
 
-   <script src="//cdn.ckeditor.com/4.4.3/full/ckeditor.js"></script>
+   <script src="{{Asset('assets/ckeditor/ckeditor.js')}}"></script>
 
    <script src="{{Asset('assets/js/jquery-validate/jquery.validate.js')}}"></script>
 
@@ -196,7 +196,9 @@
                     <li>
                         <a href="{{Asset('admin/imageslide')}}"><i class="glyphicon glyphicon-picture"></i> Images Slide</a>
                     </li>
-
+                    <li>
+                        <a href="{{URL::route('comment')}}"><i class="fa fa-comment-o"></i>Bình luận</a>
+                    </li>
                 </ul>
                <script type="text/javascript">
                     // $('.nav li ').click(function(e) {

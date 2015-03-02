@@ -94,7 +94,7 @@ class VendorController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$vendor=Vendor::where("id","=",$id)->get()->first();
+		$vendor = Vendor::where("id","=",$id)->get()->first();
 		return View::make('edit-vendor')->with("vendor",$vendor);
 	}
 
@@ -115,13 +115,13 @@ class VendorController extends \BaseController {
 			if(Input::hasFile('avatar')) 
 			{
 
-				$path_delete = base_path($photo_vendor);
+				$path_delete = base_path("../".$photo_vendor);
 				File::delete($path_delete);
 
-				File::makeDirectory(base_path('images/avatar/'.$year.'/'.$month),$mode = 0775,true,true);
+				File::makeDirectory(base_path('../images/avatar/'.$year.'/'.$month),$mode = 0775,true,true);
 				$image = Input::file('avatar');
 				$filename =str_random(10) . '.' .$image->getClientOriginalExtension();
-				$path = base_path('images/avatar/'.$year.'/'.$month.'/'.$filename);
+				$path = base_path('../images/avatar/'.$year.'/'.$month.'/'.$filename);
 				$pathsave='images/avatar/'.$year.'/'.$month.'/'.$filename;
 				Image::make($image->getRealPath())->resize(300, 300)->save($path);
 			}
@@ -246,8 +246,8 @@ class VendorController extends \BaseController {
 	// get images
 	public static function getImagesVendor($image)
 	{
-		$path = base_path().'/'.$image;
-		return $path;
+		// $path = base_path().'/'.$image;
+		$path = base_path('../'.$image);
 		
 		// Read image path, convert to base64 encoding
 		$imageData = base64_encode(file_get_contents($path));
@@ -259,6 +259,43 @@ class VendorController extends \BaseController {
 		echo '<img src="',$src,'">';
 
 	}
-
+	public function comment(){
+		$vendors = Vendor::get();
+		$comments = VendorComment::orderBy('created_at','DECS')->paginate(10);
+		return View::make('comment')->with('comments',$comments)
+									->with('vendors',$vendors);
+	}
+	public function detailComment($id_comment){
+		$comment = VendorComment::where('id',$id_comment)->get()->first();
+		return View::make('detail-comment')->with('comment',$comment);
+	}
+	public function ActiveComment(){
+		$id_comment = Input::get('id_comment');
+		$active = VendorComment::where('id',$id_comment)->get()->first()->active;
+		if ($active == 1) {
+			VendorComment::where('id',$id_comment)->update(array('active'=>0));
+			return Response::json(array('active'=>0));
+		} else {
+			VendorComment::where('id',$id_comment)->update(array('active'=>1));
+			return Response::json(array('active'=>1));
+		}		
+	}
+	public function getComment(){
+		$id_comment = Input::get('id_comment');
+		$comment = VendorComment::where('id',$id_comment)->get()->first();
+		$name_vendor = Vendor::where('id',$comment->vendor)->get()->first()->name;
+		return Response::json(array('comment'=>$comment,'name_vendor'=>$name_vendor));
+	}
+	public function deleteComment(){
+		$id_comment = Input::get('id_comment');
+		VendorComment::where('id',$id_comment)->delete();
+	}
+	public function searchComment(){
+		$vendors = Vendor::get();
+		$id_vendor = Input::get('name_search');
+		$comments = VendorComment::where('vendor',$id_vendor)->orderBy('created_at','DECS')->paginate(10);
+		return View::make('comment')->with('comments',$comments)
+									->with('vendors',$vendors);
+	}
 
 }
