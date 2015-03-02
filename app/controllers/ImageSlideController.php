@@ -26,7 +26,7 @@ class ImageSlideController extends \BaseController {
 	public static function deleteImageVendor($id)
 	{	
 		$name1 =	PhotoSlide::where('id',$id)->get()->first()->bigpic;
-		$name1 =	PhotoSlide::where('id',$id)->get()->first()->smallpic;
+		$name2 =	PhotoSlide::where('id',$id)->get()->first()->smallpic;
 		$path_delete1 = base_path('../'.$name1);
 		$path_delete2 = base_path('../'.$name2);
 		File::delete($path_delete1);

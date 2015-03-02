@@ -27,9 +27,9 @@ Admin > User > Edit | Thuna.vn
 			</td>
 			<td class="danger">
 				<select name="role" class="form-control">
-					<option value="2">User</option>
-					<option value="1">Admin</option>
-					<option value="3">Vendor</option>
+					<option value="1" @if($user->role_id==1) {{"selected"}} @endif>Admin</option>
+					<option value="2" @if($user->role_id==2) {{"selected"}} @endif>User</option>
+					<option value="3" @if($user->role_id==3) {{"selected"}} @endif>Vendor</option>
 				</select>
 			</td>
 			<td class="danger">
