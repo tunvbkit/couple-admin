@@ -216,5 +216,21 @@ Route::group(array("prefix" => "admin"),function()
 	Route::post('get-comment',array('as'=>'get_comment','uses'=>'VendorController@getComment'));
 	Route::post('delete-comment',array('as'=>'delete_comment','uses'=>'VendorController@deleteComment'));
 	Route::post('search-comment',array('as'=>'search_comment','uses'=>'VendorController@searchComment'));
+	// taxonomy
+	Route::get('taxonomy',array('as'=>'taxonomy','uses'=>'TaxonomyController@index'));
+	Route::get('edit-taxonomy/{id}',array('as'=>'edit_taxonomy','uses'=>'TaxonomyController@edit'));
+	Route::post('update-taxonomy/{id}',array('as'=>'update_taxonomy','uses'=>'TaxonomyController@update'));
+	Route::get('delete-taxonomy/{id}',array('as'=>'delete_taxonomy','uses'=>'TaxonomyController@destroy'));
+	Route::post('search-taxonomy',array('as'=>'search_taxonomy','uses'=>'TaxonomyController@search'));
+	Route::get('add-taxonomy',array('as'=>'add_taxonomy','uses'=>'TaxonomyController@create'));
+	Route::post('store-taxonomy',array('as'=>'store_taxonomy','uses'=>'TaxonomyController@store'));
+	// article
+	Route::get('article',array('as'=>'article','uses'=>'TaxonomyController@article'));
+	Route::get('add-article',array('as'=>'add_article','uses'=>'TaxonomyController@createArticle'));
+	Route::post('store-article',array('as'=>'store_article','uses'=>'TaxonomyController@storeArticle'));
+	Route::post('search-article',array('as'=>'search_article','uses'=>'TaxonomyController@searchArticle'));
+	Route::get('edit-article/{id}',array('as'=>'edit_article','uses'=>'TaxonomyController@editArticle'));
+	Route::post('update-article/{id}',array('as'=>'update_article','uses'=>'TaxonomyController@updateArticle'));
+	Route::get('delete-article/{id}',array('as'=>'delete_article','uses'=>'TaxonomyController@destroyArticle'));
 });
 

@@ -129,3 +129,11 @@ td div.menu-hidden a
 .model-delete{
 	margin-top: 10%;
 }
+.side-nav li a {
+	padding: 10px !important;
+}
+.taxonomy {
+	display: block;
+	width: 20%;
+	height: 30px;
+}

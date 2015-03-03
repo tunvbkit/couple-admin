@@ -199,6 +199,12 @@
                     <li>
                         <a href="{{URL::route('comment')}}"><i class="fa fa-comment-o"></i>Bình luận</a>
                     </li>
+                     <li>
+                        <a href="{{URL::route('taxonomy')}}"><i class="fa fa-book"></i>Chủ đề</a>
+                    </li>
+                    <li>
+                        <a href="{{URL::route('article')}}"><i class="fa fa-book"></i>Bài viết</a>
+                    </li>
                 </ul>
                <script type="text/javascript">
                     // $('.nav li ').click(function(e) {
