@@ -203,5 +203,15 @@ class TaxonomyController extends \BaseController {
 		Article::find($id)->delete();		
 		return Redirect::to("admin/article")->with('message','Đã xoá thành công');
 	}
+	public static function getArticle($slug){
+		return Article::where('slug',$slug)->get()->first();
+	}
+	public static function getTaxonomyArticle($id){
+	 	return Taxonomy::where('id',$id)->get()->first()->slug;
+	}
+	public function articleDetail($slug_taxonomy,$slug_article){
+		$article = $this->getArticle($slug_article);
+		return View::make('detail-article')->with('article',$article);
+	}
 
 }

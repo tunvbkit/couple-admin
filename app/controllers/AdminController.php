@@ -165,8 +165,21 @@ class AdminController extends \BaseController {
 			return View::make("users")->with("users", $users);
 		}
 		else{
+			$count_user_day = 0;
+			$msg = Session::get('msg');
+			$day_now = Carbon::today()->toDateString();
+			$arr_users = User::get();
+			$count_user = $arr_users->count();
+			foreach ($arr_users as $arr_user) {
+				$tamp = explode(" ",$arr_user->created_at);
+				if ( $day_now == $tamp[0] ) {
+				 	$count_user_day = $count_user_day + 1;
+				 } 
+			}	
 			$users = User::where('email', 'LIKE', '%'.$keyword.'%')->paginate(8);
-			return View::make("users")->with("users", $users);
+			return View::make("users")->with("users", $users)
+										->with('count_user',$count_user)
+										->with('count_user_day',$count_user_day);
 		}
 	}
 

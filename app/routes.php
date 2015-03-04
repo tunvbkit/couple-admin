@@ -232,5 +232,6 @@ Route::group(array("prefix" => "admin"),function()
 	Route::get('edit-article/{id}',array('as'=>'edit_article','uses'=>'TaxonomyController@editArticle'));
 	Route::post('update-article/{id}',array('as'=>'update_article','uses'=>'TaxonomyController@updateArticle'));
 	Route::get('delete-article/{id}',array('as'=>'delete_article','uses'=>'TaxonomyController@destroyArticle'));
+	Route::get('article/{slug_taxonomy}/{slug_article}',array('as'=>'detail_article','uses'=>'TaxonomyController@articleDetail'));
 });
 

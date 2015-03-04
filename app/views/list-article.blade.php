@@ -54,7 +54,7 @@
 									<input type="checkbox" value="{{$article->id}}">
 									<input type="hidden" name="chk-{{$article->id}}" value="" ></td>
 								<td>{{$article->id}}</td>
-								<td>{{$article->title}}
+								<td><a href="{{URL::route('detail_article',array((TaxonomyController::getTaxonomyArticle($article->taxonomy)),$article->slug))}}">{{$article->title}}</a>
 									<ul class="menu list-unstyled" role="menu">
                             			<li><a href="{{URL::route('edit_article',array($article->id))}}">Edit</a></li>
                             			<li><a class="confirm" href="{{URL::route('delete_article',array($article->id))}}">Delete</a></li>
