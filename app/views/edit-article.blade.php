@@ -37,6 +37,10 @@
 								<p class="text-left alert alert-danger">{{$message}}</p>
 							@endforeach
 						</div>
+						 <div class="form-group">
+						  	<label>Mô tả</label>
+						    <textarea type="text" class="description form-control" name="description" style="display:block;width:100%;">{{$article->description}}</textarea>
+						  </div>
 	                    <div class="form-group">
 			                <label>Nội dung</label>
 			                <textarea name="editor4" class="ckeditor form-control" cols="80" id="editor4" rows="10" tabindex="1">{{$article->content}}</textarea>

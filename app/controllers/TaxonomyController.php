@@ -147,6 +147,7 @@ class TaxonomyController extends \BaseController {
 	public function storeArticle(){
 		//
 		$title 			= Input::get('NameCategory');
+		$description    = Input::get('description');
 		$content 	= Input::get('editor4');
 		$taxonomy = Input::get('taxonomy');
 		$rules 			= array(
@@ -157,6 +158,7 @@ class TaxonomyController extends \BaseController {
 		if($validator->passes()){
 			$article = new Article();
 			$article->title = $title;
+			$article->description = $description;
 			$article->content = $content;
 			$article->taxonomy = $taxonomy;
 			$article->slug = Str::slug($title);
@@ -185,10 +187,11 @@ class TaxonomyController extends \BaseController {
 		$validator 			= Validator::make(Input::all(),$rules);
 		$id 				= Input::get('IdCategory');
 		$title 				= Input::get('NameCategory');
+		$description		= Input::get('description');
 		$content 		= Input::get('editor4');
 		$taxonomy      	= Input::get('taxonomy');
 		if($validator->passes()){
-			Article::where('id',$id)->update(array('title' => $title,'content'=>$content,'taxonomy'=>$taxonomy,'slug'=>Str::slug($title)));
+			Article::where('id',$id)->update(array('title' => $title,'description'=>$description,'content'=>$content,'taxonomy'=>$taxonomy,'slug'=>Str::slug($title)));
 		return Redirect::to("admin/article")->with('message','Đã lưu thành công');
 		}
 		else

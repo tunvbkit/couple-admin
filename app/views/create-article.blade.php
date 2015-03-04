@@ -27,6 +27,10 @@
 					    <input type="text" class="form-control" id="NameCategory" name="NameCategory" >
 					  </div>
 					  <div class="form-group">
+					  	<label>Mô tả</label>
+					    <textarea type="text" class="description form-control" name="description" style="display:block;width:100%;"></textarea>
+					  </div>
+					  <div class="form-group">
 			                <label>Nội dung</label>
 			                <textarea name="editor4" class="ckeditor form-control" cols="80" id="editor4" rows="10" tabindex="1"></textarea>
 			                 @foreach ($errors->get('editor4') as $message)

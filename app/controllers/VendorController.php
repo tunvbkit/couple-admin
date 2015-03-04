@@ -39,7 +39,7 @@ class VendorController extends \BaseController {
 			$path = base_path('../images/avatar/'.$year.'/'.$month.'/'.$filename);
 			$pathsave='images/avatar/'.$year.'/'.$month.'/'.$filename;
 			Image::make($image->getRealPath())->resize(300, 300)->save($path);
-			if (!empty(Input::get('email'))) {
+			if (Input::get('email') == true) {
 				$user = new User();
 				$user->email = Input::get('email');
 				$user->role_id = 3;
@@ -48,7 +48,7 @@ class VendorController extends \BaseController {
 			}			
 			$vendor=new Vendor();
 			$vendor->name=Input::get('name');
-			if (!empty(Input::get('email'))) {
+			if (Input::get('email') == true) {
 				$vendor->user = User::where('email',Input::get('email'))->get()->first()->id;
 			}			
 			$vendor->address=Input::get('address');
