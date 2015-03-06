@@ -197,7 +197,7 @@
                         <a href="{{Asset('admin/imageslide')}}"><i class="glyphicon glyphicon-picture"></i> Images Slide</a>
                     </li>
                     <li>
-                        <a href="{{URL::route('comment')}}"><i class="fa fa-comment-o"></i>Bình luận</a>
+                        <a href="{{URL::route('comment')}}"><i class="fa fa-comment-o"></i>Nhận xét</a>
                     </li>
                      <li>
                         <a href="{{URL::route('taxonomy')}}"><i class="fa fa-book"></i>Chủ đề</a>

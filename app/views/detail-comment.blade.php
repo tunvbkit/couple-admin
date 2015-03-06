@@ -1,11 +1,11 @@
 @extends('main')
 @section('title')
-	Bình luận
+	Nhận xét
 @endsection
 @section('content')
 <div class="row">
 	<div class="col-xs-10 col-md-offset-1">
-		<h3 >Chi tiết bình luận</h3>
+		<h3 >Chi tiết nhận xét</h3>
 	</div>
 	<div class="col-xs-10 col-md-offset-1 detail-from">
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="font-weight: bold;">

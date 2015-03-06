@@ -1,13 +1,13 @@
 @extends('main')
 @section('title')
-	Bình luận
+	Nhận xét
 @endsection
 @section('content')
  <div class="row">
  	<div class="col-xs-10 col-md-offset-1">
  		<div class="row">
 			<div class="col-xs-6 ">
-				<h3>Bình luận</h3>
+				<h3>Nhận xét</h3>
 			</div>
 			<div class="col-xs-6 ">
 				
@@ -15,7 +15,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-4"> 
-				<button id="del_category" class="btn btn-danger" type="submit"> Xóa bình luận </button>
+				<button id="del_category" class="btn btn-danger" type="submit"> Xóa nhận xét </button>
 			</div>
 			<div class="col-xs-8">
 				<form id="search-category" role="form" action="{{URL::route('search_comment')}}" method="post">
@@ -99,7 +99,7 @@
     <div class="modal-content ">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title text-center">Xóa bình luận từ user: <span class="f_user"></span> ->vendor: <span class="t_vendor"></span></h4>
+        <h4 class="modal-title text-center">Xóa nhận xét từ user: <span class="f_user"></span> ->vendor: <span class="t_vendor"></span></h4>
       </div>
       <div class="modal-body">
         <p class="content-comment text-center"></p>         
