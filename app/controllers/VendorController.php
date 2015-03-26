@@ -58,10 +58,14 @@ class VendorController extends \BaseController {
 			$vendor->video=Input::get('video');
 			$vendor->category=Input::get('category');
 			$vendor->location=Input::get('location');
-			$vendor->avatar=$pathsave;
         	$vendor->about=strip_tags(Input::get('editor4'));
         	$vendor->slug=Str::slug(Input::get('name'));
         	$vendor->save();
+        	$id_vendor = Vendor::where('user',User::where('email',Input::get('email'))->get()->first()->id)->get()->first()->id;
+        	$avatar = new Avatar();
+        	$avatar->avatar = $pathsave;
+        	$avatar->vendor = $id_vendor;
+        	$avatar->save();
         	return Redirect::to('admin/vendors')->with('messages',"Tao Vendor thanh cong");
 		
 	}
