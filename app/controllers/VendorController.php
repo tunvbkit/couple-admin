@@ -100,7 +100,8 @@ class VendorController extends \BaseController {
 	public function edit($id)
 	{
 		$vendor = Vendor::where("id","=",$id)->get()->first();
-		return View::make('edit-vendor')->with("vendor",$vendor);
+		$avatar = Avatar::where('vendor',$vendor->id)->where('active',1)->get()->first();
+		return View::make('edit-vendor')->with("vendor",$vendor)->with('image',$avatar);
 	}
 
 
@@ -115,7 +116,7 @@ class VendorController extends \BaseController {
 			$year=date("Y");
 			$month=date('m');
 
-			$photo_vendor = Vendor::where('id', $id)->get()->first()->avatar;
+			$photo_vendor = Avatar::where('vendor', $id)->where('active',1)->get()->first()->avatar;
 
 			if(Input::hasFile('avatar')) 
 			{
@@ -143,14 +144,9 @@ class VendorController extends \BaseController {
 			$vendor->location=Input::get('location');
 			
 			if(Input::hasFile('avatar')) 
-			{
-				$vendor->avatar=$pathsave;
-			} else {
-				$photo_vendor = Vendor::where('id', $id)->get()->first()->avatar;
-				$vendor->avatar=$photo_vendor;
+			{					
+				 Avatar::where('vendor',$id)->where('active',1)->update(array('avatar'=>$pathsave));
 			}
-
-			
         	$vendor->about=strip_tags(Input::get('editor4'));
         	$vendor->slug=Str::slug(Input::get('name'));
         	$vendor->save();
