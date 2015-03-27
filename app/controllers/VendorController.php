@@ -65,6 +65,7 @@ class VendorController extends \BaseController {
         	$avatar = new Avatar();
         	$avatar->avatar = $pathsave;
         	$avatar->vendor = $id_vendor;
+        	$avatar->active = 1;
         	$avatar->save();
         	return Redirect::to('admin/vendors')->with('messages',"Tao Vendor thanh cong");
 		
